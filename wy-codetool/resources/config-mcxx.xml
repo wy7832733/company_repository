@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configure>
+	<basedir>D:\code</basedir>
+	<basePackage>cn.cyit</basePackage>
+	<db>
+		<!-- 
+		<dbName>yzlhzs</dbName>
+		 -->
+		<dbName>ticket</dbName>
+		<user>root</user>
+		<pwd>root</pwd>
+		<driver>com.mysql.jdbc.Driver</driver>
+		<!-- <url>jdbc:mysql://119.10.55.181:9806/yzlhzs?useUnicode=true&amp;characterEncoding=utf-8</url> -->
+		<url>jdbc:mysql://localhost:3306/ticket?useUnicode=true&amp;characterEncoding=utf-8</url>
+	</db>
+	<packageSetting>
+		<actionPackage>controller</actionPackage>
+		<daoPackage>dao</daoPackage>
+		<daoImplPackage>impl</daoImplPackage>
+		<servicePackage>service</servicePackage>
+		<serviceImplPackage>Impl</serviceImplPackage>
+		<entityPackage>bean</entityPackage>
+		<mapperPackage>mapper</mapperPackage>
+		<viewPackage>view</viewPackage>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+	</packageSetting>
+	<module>
+		<persistance>mybatis</persistance>
+		<name>traffic</name>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<savePath>D:\code\</savePath>
+		<framework>mvc</framework>
+		
+		<table name="s_invoice_record"/>
+		
+		
+	</module>
+</configure>

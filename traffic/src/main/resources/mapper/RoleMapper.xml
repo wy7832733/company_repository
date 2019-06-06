@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cyit.traffic.dao.RoleMapper">
+  <resultMap id="BaseResultMap" type="cn.cyit.traffic.bean.Role">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="role" jdbcType="VARCHAR" property="role" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="available" jdbcType="VARCHAR" property="available" />
+    <result column="visual_dep" jdbcType="VARCHAR" property="visualDep" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, role, description, available,visual_dep
+  </sql>
+  <select id="getRoleManageMap" parameterType="Role" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from s_role
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from s_role
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="inserRole" parameterType="cn.cyit.traffic.bean.Role">
+    insert into s_role (role, description)
+    values (#{role,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cyit.traffic.bean.Role">
+    insert into s_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="role != null">
+        role,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="available != null">
+        available,
+      </if>
+      <if test="visualDep != null">
+        visual_dep
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="role != null">
+        #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="available != null">
+        #{available,jdbcType=VARCHAR},
+      </if>
+      <if test="visualDep != null">
+        #{visualDep,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </insert>
+  <update id="deleteRole" parameterType="cn.cyit.traffic.bean.Role">
+    update s_role
+     set delete_flag = 1
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateRole" parameterType="cn.cyit.traffic.bean.Role">
+    update s_role 
+    <set>
+		<if test="role !=null and role !=''">
+	       role = #{role,jdbcType=VARCHAR},
+		</if>
+        <if test="visualDep != null and visualDep != ''">
+           visual_dep= #{visualDep,jdbcType=VARCHAR},
+        </if>
+        <if test="description != null and description != ''">    
+	       description = #{description,jdbcType=VARCHAR},
+        </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  
+  <select id="getRoleList" resultType="Role">
+  	 select *
+    from s_role
+  </select>
+  
+  <select id="getRoleListDataCount" parameterType="Role" resultType="int">
+  		SELECT count(*) from s_role where delete_flag = 0
+  		<if test="role != null">
+         and role like CONCAT('%',#{role},'%') 
+        </if>
+  </select>
+  
+  <select id="getRoleListData" parameterType="Role" resultType="Role">
+  		SELECT * from s_role where delete_flag = 0
+  		<if test="role != null">
+         and role like CONCAT('%',#{role},'%') 
+        </if>
+  </select>
+  
+  <select id="getPermissionManageList" resultType="Permission">
+  	SELECT p.id,p.name,p.parent_id as fid from s_permission p
+  </select>
+  
+  <select id="getPermissionByRole" parameterType="Role" resultType="RolePermission">
+  	 SELECT * FROM s_role_permission WHERE role_id = #{id}
+  </select>
+  
+  <delete id="deletePermissionByRole" parameterType="RolePermission">
+    delete from s_role_permission
+    where role_id = #{role_id}
+  </delete>
+  
+   <insert id="saveRolePermission" parameterType="cn.cyit.traffic.bean.RolePermission">
+    insert into s_role_permission (role_id, permission_id
+      )
+    values (#{role_id,jdbcType=INTEGER}, #{permission_id,jdbcType=INTEGER}
+      )
+  </insert>
+</mapper>

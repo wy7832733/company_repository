@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cyit.traffic.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="cn.cyit.traffic.bean.User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="p_id" jdbcType="INTEGER" property="p_id" />
+    <result column="area_id" jdbcType="INTEGER" property="area_id" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="login_key" jdbcType="VARCHAR" property="login_key" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="delete_flay" jdbcType="INTEGER" property="delete_flay" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, account, password, name, salt, state, p_id, area_id, phone, login_key, email, 
+    delete_flay
+  </sql>
+  <select id="getUserManageMap" parameterType="java.lang.Integer" resultType="User">
+    select 
+    u.*,r.role_id
+    from s_user u 
+ 	LEFT JOIN s_user_role r on r.user_id = u.id
+    where u.id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from s_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertUser" parameterType="cn.cyit.traffic.bean.User" useGeneratedKeys="true" keyProperty="id">
+    insert into s_user (account, password, 
+      name, salt, state, 
+      p_id, area_id, phone, 
+      login_key, email
+      )
+    values (#{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
+      #{p_id,jdbcType=INTEGER}, #{area_id,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, 
+      #{login_key,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cyit.traffic.bean.User">
+    insert into s_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="account != null">
+        account,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="salt != null">
+        salt,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="p_id != null">
+        p_id,
+      </if>
+      <if test="area_id != null">
+        area_id,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="login_key != null">
+        login_key,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="delete_flay != null">
+        delete_flay,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="account != null">
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="p_id != null">
+        #{p_id,jdbcType=INTEGER},
+      </if>
+      <if test="area_id != null">
+        #{area_id,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="login_key != null">
+        #{login_key,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="delete_flay != null">
+        #{delete_flay,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cyit.traffic.bean.User">
+    update s_user
+    <set>
+      <if test="account != null and account !=''">
+        account like '%${account}%'
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="p_id != null">
+        p_id = #{p_id,jdbcType=INTEGER},
+      </if>
+      <if test="area_id != null">
+        area_id = #{area_id,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="login_key != null">
+        login_key = #{login_key,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="delete_flay != null">
+        delete_flay = #{delete_flay,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cyit.traffic.bean.User">
+    update s_user
+    set account = #{account,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      p_id = #{p_id,jdbcType=INTEGER},
+      area_id = #{area_id,jdbcType=INTEGER},
+      phone = #{phone,jdbcType=VARCHAR},
+      login_key = #{login_key,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      delete_flay = #{delete_flay,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  	<select id="queryUserByName" resultType="User" parameterType="java.lang.String">
+        SELECT * FROM s_user WHERE account=#{account}
+    </select>
+    
+    <select id="findByUsername" resultType="User" parameterType="java.lang.String">
+        SELECT * FROM s_user WHERE account=#{account}
+    </select>
+    
+    <select id="getUserRoleList" resultType="Role" parameterType="User">
+    	SELECT r.description,r.id
+		from s_user u 
+		LEFT JOIN s_user_role s on s.id
+		LEFT JOIN s_role r on r.id = s.role_id
+		WHERE u.id = #{id}
+    </select>
+    
+    <select id="getUserPermissionList" resultType="Permission" parameterType="Role">
+    	SELECT p.*
+		FROM s_permission p
+		LEFT JOIN s_role_permission s on s.permission_id = p.id
+		WHERE s.role_id = #{id}
+    </select>
+    
+    
+     <select id="findUsersByPageCount" parameterType="User" resultType="int">
+		SELECT count(1)
+		FROM s_user s
+		LEFT JOIN s_area a on a.id = s.area_id
+		
+		 WHERE s.delete_flay = 0
+		<if test="name!=null and name !=''">
+			AND name LIKE CONCAT('%',#{name},'%')
+		</if>
+		<if test="account!=null and account !=''">
+			AND account = #{account}
+		</if>
+	</select>
+	 
+	<select id="getUserListData" parameterType="User" resultType="User">
+		SELECT s.*,a.area
+		FROM s_user s
+		LEFT JOIN s_area a on a.id = s.area_id
+		
+		 WHERE s.delete_flay = 0
+		<if test="name!=null and name !=''">
+			AND name LIKE CONCAT('%',#{name},'%')
+		</if>
+		<if test="account!=null and account !=''">
+			AND account = #{account}
+		</if>
+		<if test="offset !='' and offset !=null">
+			<if test=" limit !='' and limit !=null">
+			LIMIT #{offset},#{limit}
+			</if>		
+		</if>
+	</select>
+	
+	<insert id="addUserRole" parameterType="User">
+		insert into s_user_role(user_id,role_id) values(#{id},#{role_id})
+	</insert>
+	
+	
+	 <delete id="deleteUserRole" parameterType="User">
+	    delete from s_user_role
+	    where user_id = #{id,jdbcType=INTEGER}
+	  </delete>
+</mapper>

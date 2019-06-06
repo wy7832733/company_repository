@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cyit.traffic.dao.IndexMapper">
+  	
+  	<select id="getPermissionList" parameterType="User" resultType="Permission">
+  		SELECT p.* 
+		FROM s_permission p
+		LEFT JOIN s_role_permission s on s.permission_id = p.id
+		LEFT JOIN s_user_role r on r.role_id = s.role_id
+		WHERE parent_id is NULL AND r.user_id = #{id} AND p.resource_type = 'menu'
+		order by sorder asc
+  	</select>
+  	
+  	<select id="getPermissionChildList" parameterType="Permission" resultType="Permission">
+  		SELECT p.* 
+		FROM s_permission p
+		LEFT JOIN s_role_permission s on s.permission_id = p.id
+		LEFT JOIN s_user_role r on r.role_id = s.role_id
+		WHERE parent_id = #{id} AND r.user_id = #{user_id} AND p.resource_type = 'menu'
+  	</select>
+</mapper>

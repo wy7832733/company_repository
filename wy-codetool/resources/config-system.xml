@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configure>
+	<basedir>D:\code</basedir>
+	<basePackage>cn.ssm</basePackage>
+	<db>
+		<dbName>boot</dbName>
+		<user>root</user>
+		<pwd>root</pwd>
+		<driver>com.mysql.jdbc.Driver</driver>
+		<url>jdbc:mysql://localhost:3306/boot?useUnicode=true&amp;characterEncoding=utf-8</url>
+	</db>
+	<packageSetting>
+		<actionPackage>controller</actionPackage>
+		<daoPackage>dao</daoPackage>
+		<daoImplPackage>impl</daoImplPackage>
+		<servicePackage>service</servicePackage>
+		<serviceImplPackage>impl</serviceImplPackage>
+		<entityPackage>bean</entityPackage>
+		<mapperPackage>mapper</mapperPackage>
+		<viewPackage>view</viewPackage>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+	</packageSetting>
+	<module>
+		<persistance>mybatis</persistance>
+		<name>hean</name>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<savePath>D:\code\</savePath>
+		<framework>mvc</framework>
+		
+		<table name="s_area"/>
+		
+	</module>
+</configure>

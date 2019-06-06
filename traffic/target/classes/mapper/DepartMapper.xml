@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cyit.traffic.dao.DepartMapper">
+  <resultMap id="BaseResultMap" type="cn.cyit.traffic.bean.Depart">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="depart_name" jdbcType="VARCHAR" property="depart_name" />
+    <result column="intro" jdbcType="VARCHAR" property="intro" />
+    <result column="delete_flay" jdbcType="INTEGER" property="delete_flay" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, depart_name, intro, delete_flay,pid
+  </sql>
+  <select id="getDepartManageMap" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from s_depart
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getDepartManageList" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from s_depart
+    where delete_flay = 0
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from s_depart
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.cyit.traffic.bean.Depart">
+    insert into s_depart (id, depart_name, intro, 
+      delete_flay,pid)
+    values (#{id,jdbcType=INTEGER}, #{depart_name,jdbcType=VARCHAR}, #{intro,jdbcType=VARCHAR}, 
+      #{delete_flay,jdbcType=INTEGER},#{pid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertDepart" parameterType="cn.cyit.traffic.bean.Depart">
+    insert into s_depart
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="depart_name != null">
+        depart_name,
+      </if>
+      <if test="intro != null">
+        intro,
+      </if>
+      <if test="delete_flay != null">
+        delete_flay,
+      </if>
+      <if test="pid != '' and pid !=null">
+      pid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="depart_name != null">
+        #{depart_name,jdbcType=VARCHAR},
+      </if>
+      <if test="intro != null">
+        #{intro,jdbcType=VARCHAR},
+      </if>
+      <if test="delete_flay != null">
+        #{delete_flay,jdbcType=INTEGER},
+      </if>
+      <if test="pid != '' and pid !=null">
+        #{pid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateDepart" parameterType="cn.cyit.traffic.bean.Depart">
+    update s_depart
+    <set>
+      <if test="depart_name != null">
+        depart_name = #{depart_name,jdbcType=VARCHAR},
+      </if>
+      <if test="intro != null">
+        intro = #{intro,jdbcType=VARCHAR},
+      </if>
+      <if test="delete_flay != null">
+        delete_flay = #{delete_flay,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null and pid !=''">
+      	pid = #{pid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="deleteDepart" parameterType="cn.cyit.traffic.bean.Depart">
+    update s_depart
+    <set>
+      <if test="depart_name != null">
+        depart_name = #{depart_name,jdbcType=VARCHAR},
+      </if>
+      <if test="intro != null">
+        intro = #{intro,jdbcType=VARCHAR},
+      </if>
+      <if test="delete_flay != null">
+        delete_flay = #{delete_flay,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="cn.cyit.traffic.bean.Depart">
+    update s_depart
+    set depart_name = #{depart_name,jdbcType=VARCHAR},
+      intro = #{intro,jdbcType=VARCHAR},
+      delete_flay = #{delete_flay,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getDepartListDataCount" parameterType="Depart" resultType="int">
+  		select count(1) from s_depart where delete_flay = 0
+ 		<if test="depart_name != null">
+         and	depart_name like  concat('%',#{depart_name},'%')
+       </if>
+  	
+  </select>
+  
+  <select id="getDepartListData" parameterType="Depart" resultType="Depart">
+  		select * from s_depart where delete_flay = 0
+ 		<if test="depart_name != null">
+        and	depart_name like  concat('%',#{depart_name},'%')
+       </if>
+       LIMIT #{offset},#{limit}
+  </select>
+</mapper>

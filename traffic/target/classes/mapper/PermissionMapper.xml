@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cyit.traffic.dao.PermissionMapper">
+  <resultMap id="BaseResultMap" type="cn.cyit.traffic.bean.Permission">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="resource_type" jdbcType="VARCHAR" property="resource_type" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="permission" jdbcType="VARCHAR" property="permission" />
+    <result column="parent_id" jdbcType="INTEGER" property="parent_id" />
+    <result column="parent_ids" jdbcType="VARCHAR" property="parent_ids" />
+    <result column="available" jdbcType="VARCHAR" property="available" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, resource_type, url, permission, parent_id, parent_ids, available
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from s_permission
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from s_permission
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.cyit.traffic.bean.Permission">
+    insert into s_permission (id, name, resource_type, 
+      url, permission, parent_id, 
+      parent_ids, available)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{resource_type,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{permission,jdbcType=VARCHAR}, #{parent_id,jdbcType=INTEGER}, 
+      #{parent_ids,jdbcType=VARCHAR}, #{available,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cyit.traffic.bean.Permission">
+    insert into s_permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="resource_type != null">
+        resource_type,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="permission != null">
+        permission,
+      </if>
+      <if test="parent_id != null">
+        parent_id,
+      </if>
+      <if test="parent_ids != null">
+        parent_ids,
+      </if>
+      <if test="available != null">
+        available,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="resource_type != null">
+        #{resource_type,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null">
+        #{permission,jdbcType=VARCHAR},
+      </if>
+      <if test="parent_id != null">
+        #{parent_id,jdbcType=INTEGER},
+      </if>
+      <if test="parent_ids != null">
+        #{parent_ids,jdbcType=VARCHAR},
+      </if>
+      <if test="available != null">
+        #{available,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cyit.traffic.bean.Permission">
+    update s_permission
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="resource_type != null">
+        resource_type = #{resource_type,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null">
+        permission = #{permission,jdbcType=VARCHAR},
+      </if>
+      <if test="parent_id != null">
+        parent_id = #{parent_id,jdbcType=INTEGER},
+      </if>
+      <if test="parent_ids != null">
+        parent_ids = #{parent_ids,jdbcType=VARCHAR},
+      </if>
+      <if test="available != null">
+        available = #{available,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cyit.traffic.bean.Permission">
+    update s_permission
+    set name = #{name,jdbcType=VARCHAR},
+      resource_type = #{resource_type,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      permission = #{permission,jdbcType=VARCHAR},
+      parent_id = #{parent_id,jdbcType=INTEGER},
+      parent_ids = #{parent_ids,jdbcType=VARCHAR},
+      available = #{available,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
